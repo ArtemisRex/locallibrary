@@ -20,3 +20,19 @@ def index(request):
         'index.html',
         context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors},
     )
+
+from django.views import generic
+
+class BookListView(generic.ListView):
+    model = Book
+
+    # Options are available for filtering the resulting list
+    # these are implemented by adding methods to this class
+
+    # Existing methods can also be over-rided using the following bullets:
+    #    * First get the existing context from our superclass.
+    #    * Then add your new context information.
+    #    * Then return the new (updated) context
+
+class BookDetailView(generic.DetailView):
+    model = Book
