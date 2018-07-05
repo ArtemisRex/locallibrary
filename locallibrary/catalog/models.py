@@ -1,4 +1,7 @@
+
+from datetime import date
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -52,6 +55,9 @@ class Book(models.Model):
     # Each book has one language, but each language has many books
     language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
+    # Borrower field for library useres
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
     def __str__(self):
         """
         String for representing the Model object.
@@ -104,6 +110,11 @@ class BookInstance(models.Model):
         """
         return '{0} ({1})'.format(self.id,self.book.title)
 
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False    
 
 # Author model
 class Author(models.Model):
