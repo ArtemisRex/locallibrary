@@ -55,9 +55,6 @@ class Book(models.Model):
     # Each book has one language, but each language has many books
     language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
-    # Borrower field for library useres
-    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-
     def __str__(self):
         """
         String for representing the Model object.
@@ -99,6 +96,10 @@ class BookInstance(models.Model):
     )
 
     status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m', help_text='Book availability')
+
+    # Borrower field for library useres
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
 
     class Meta:
         ordering = ["due_back"]
